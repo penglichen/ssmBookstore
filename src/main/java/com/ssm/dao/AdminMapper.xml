@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.AdminMapper">
+    <select id="queryAllAdmin" resultType="com.ssm.pojo.Admin">
+        select *  from t_admin
+    </select>
+
+    <select id="queryByadminnameAndPassword" parameterType="com.ssm.pojo.Admin" resultType="Integer">
+        select count(*) from t_admin where  adminname=#{adminname} and password =#{password}
+    </select>
+
+    <select id="queryadminname" resultType="com.ssm.pojo.Admin">
+        select  * from t_admin  where  adminname=#{adminname}
+    </select>
+</mapper>

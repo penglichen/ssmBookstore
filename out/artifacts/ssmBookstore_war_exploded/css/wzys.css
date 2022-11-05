@@ -1,0 +1,20 @@
+.subject{
+	font-size:30px;
+	color: red;
+	text-align: center;
+}
+.bt{
+	font-size:20px;
+	color: green;
+	text-align: center;
+}
+
+.zw{
+	font-size:15px;
+	color: black;
+}
+.key{
+	text-decoration: bold;
+	color: red;
+}
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.dao.BookMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="selectBook" type="com.ssm.pojo.Book">
+        <id column="book_id" property="bookId" />
+        <result column="book_name" property="bookName" />
+        <result column="book_price" property="bookPrice" />
+        <result column="del_price" property="delPrice" />
+        <result column="book_author" property="bookAuthor" />
+        <result column="book_press" property="bookPress" />
+        <result column="press_date" property="pressDate" />
+        <result column="book_sales" property="bookSales" />
+        <result column="book_stock" property="bookStock" />
+        <result column="img_path" property="imgPath" />
+        <result column="book_type" property="bookType" />
+    </resultMap>
+
+    <insert id="addBook" parameterType="com.ssm.pojo.Book">
+        insert into t_book(book_name,book_price,del_price,book_author,book_press,press_date,book_sales,book_stock,img_path,book_type)
+        values(#{bookName},#{bookPrice},#{delPrice},#{bookAuthor},#{bookPress},#{pressDate},#{bookSales},#{bookStock},#{imgPath},#{bookType});
+    </insert>
+
+    <delete id="deleteBookById" parameterType="int">
+        delete from t_book where book_id=#{bookId}
+    </delete>
+
+    <update id="updateBook" parameterType="com.ssm.pojo.Book">
+        update t_book
+        set book_name=#{bookName},book_price=#{bookPrice},del_price=#{delPrice},book_author=#{bookAuthor},book_press=#{bookPress}
+          ,press_date=#{pressDate},book_sales=#{bookSales},book_stock=#{bookStock},img_path=#{imgPath},book_type=#{bookType}
+        where book_id=#{bookId};
+    </update>
+
+    <select id="queryBookById" resultMap="selectBook">
+        select *  from t_book where book_id=#{bookId}
+    </select>
+
+    <select id="queryAllBook" resultMap="selectBook">
+        select *  from t_book
+    </select>
+
+    <select id="queryBookByName" resultMap="selectBook">
+        select * from t_book where book_name like '%${bookName}%'
+    </select>
+
+    <!--    分页-->
+    <select id="queryBookCount" resultType="Integer">
+        SELECT COUNT(*) FROM t_book
+    </select>
+
+    <select id="getBookByLimit" resultMap="selectBook" parameterType="com.ssm.until.Page">
+        SELECT *  FROM t_book limit #{start},#{count};
+    </select>
+</mapper>

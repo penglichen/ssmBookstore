@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--    配置：整合dao层-->
+
+    <!--    1.关联数据库配置文件：直接使用spring配置文件读取数据库配置文件-->
+    <context:property-placeholder location="classpath:db.properties" />
+
+    <!--    2.连接池-->
+    <!--    dbcp,c3p0自动化操作,druid-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!--    3.sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--        绑定mybatis的配置文件-->
+        <property name="configLocation" value="classpath:sqlMapConfig.xml"/>
+
+    </bean>
+
+    <!--    4.配置dao接口扫描包（动态），动态的实现了Dao接口可以注入到spring容器中 ，dao的ipml-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--        注入 sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--        要扫描的Dao包-->
+        <property name="basePackage" value="com.ssm.dao"/>
+    </bean>
+</beans>

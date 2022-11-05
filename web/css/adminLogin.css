@@ -1,0 +1,66 @@
+
+.subNavBox{  /*折叠菜单*/
+	width: 210px;
+	height: 100%;
+	padding-top: 28px;
+	padding-left: 6px;
+	line-height: 30px;
+	align-items: center;/*文字居中*/
+}
+
+.subNavBox .img1{  /*菜单图标*/
+	width: 18px;
+	height: 18px;
+	margin-right: 10px;
+}
+
+.subNavBox .img2{  /*菜单图标*/
+	width: 15px;
+	height: 10px;
+	margin-left: 36px;
+}
+.subNav{    /*折叠菜的主菜单：蓝底白字*/
+	/* border-bottom: solid 1px #fff; */
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 14px;
+	margin-left: 0px;
+	line-height: 46px;
+	padding-left: 8px;
+	/* background: #4991DE; */
+	color: #FFFFFF;
+}
+.subNav ul li a{
+	text-decoration: none; /*取消主菜单项超链接默认的下划线*/
+}
+.navContent{	/*折叠菜的主菜单的子菜单项列表外观：蓝底白字*/
+	display: none;
+	margin-left: 0px;
+}
+.navContent li{ 
+	list-style:none;
+}
+.subNav:hover{
+	color: #e9f2fc;
+}
+.navContent li{
+	list-style:none;
+}
+.navContent li a{
+	display:block;
+	width: 158px;
+	height: 28px;
+	padding-left: 32px;
+	font-size:14px;
+	line-height:28px;
+	/*color:#ffd04b;*/
+	text-decoration: none; /*取消子菜单项超链接默认的下划线*/
+	color: #76838f;
+	text-transform: uppercase;
+	-webkit-transition: all .25s,font .1s .15s,color .1s .15s;
+	transition: all .25s,font .1s .15s,color .1s .15s;
+}
+.navContent li a:hover{
+	color:#ffd04b;
+}
+

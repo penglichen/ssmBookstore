@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SelectUser" type="com.ssm.pojo.User">
+        <id column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="user_password" property="userPassword" />
+        <result column="user_email" property="userEmail" />
+    </resultMap>
+
+    <insert id="addUser" parameterType="com.ssm.pojo.User">
+        insert into t_user(user_name,user_password,user_email)
+        values(#{userName},#{userPassword},#{userEmail});
+    </insert>
+
+    <delete id="deleteUserById" parameterType="int">
+        delete from t_user where user_id=#{userId}
+    </delete>
+
+    <update id="updateUser" parameterType="com.ssm.pojo.User">
+        update t_user
+        set user_name=#{userName},user_password=#{userPassword},user_email=#{userEmail}
+        where user_id=#{userId};
+    </update>
+
+    <select id="queryUserById" resultMap="SelectUser">
+        select *  from t_user where user_id=#{userId}
+    </select>
+
+
+    <select id="queryUserByName" resultMap="SelectUser">
+        select * from t_user where user_name like '%${userName}%'
+    </select>
+
+    <select id="queryAllUser" resultMap="SelectUser">
+        select  *  from  t_user
+    </select>
+
+    <select id="queryByuserNameAndPassword" parameterType="com.ssm.pojo.User" resultMap="SelectUser">
+        select * from t_user where  user_name=#{userName} and user_password =#{userPassword}
+    </select>
+
+    <!--    分页-->
+    <select id="queryUserCount" resultType="Integer">
+        SELECT COUNT(*) FROM t_user
+    </select>
+
+    <select id="getUserByLimit" resultMap="SelectUser" parameterType="com.ssm.until.Page">
+        SELECT * FROM t_user limit #{start},#{count};
+    </select>
+
+</mapper>

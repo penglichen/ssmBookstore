@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="selectOrder" type="com.ssm.pojo.Order">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="user_id" property="userId" />
+        <result column="book_id" property="bookId" />
+        <result column="order_mount" property="orderMount" />
+        <result column="total_price" property="totalPrice" />
+        <result column="order_date" property="orderDate" />
+        <result column="pay_method" property="payMethod" />
+        <result column="post_method" property="postMethod" />
+        <result column="recever_name" property="receverName" />
+        <result column="recever_addr" property="receverAddr" />
+        <result column="recever_tel" property="receverTel" />
+        <result column="price_status" property="priceStatus" />
+        <collection property="book" ofType="com.ssm.pojo.Book" column="book_id">
+            <result column="book_id" property="bookId" />
+            <result column="book_name" property="bookName" />
+            <result column="book_price" property="bookPrice" />
+            <result column="del_price" property="delPrice" />
+            <result column="book_author" property="bookAuthor" />
+            <result column="book_press" property="bookPress" />
+            <result column="press_date" property="pressDate" />
+            <result column="book_sales" property="bookSales" />
+            <result column="book_stock" property="bookStock" />
+            <result column="img_path" property="imgPath" />
+            <result column="book_type" property="bookType" />
+        </collection>
+    </resultMap>
+
+
+    <insert id="addOrder" parameterType="com.ssm.pojo.Order">
+        insert into t_order(order_id,user_id,book_id,
+                            order_mount,total_price,order_date,post_method,pay_method,
+                            recever_name,recever_addr,recever_tel,price_status)
+        values(#{orderId},#{userId},#{bookId},
+               #{orderMount},#{totalPrice},#{orderDate},
+               #{postMethod},#{payMethod},#{receverName},#{receverAddr},
+               #{receverTel},#{priceStatus});
+    </insert>
+
+    <delete id="deleteOrderById" parameterType="int">
+        delete from t_order where id=#{id}
+    </delete>
+
+    <update id="updateOrder" parameterType="com.ssm.pojo.Order">
+        update t_order
+        set recever_addr=#{receverAddr},recever_tel=#{receverTel}
+        where id=#{id};
+    </update>
+
+    <select id="queryOrderById" resultMap="selectOrder">
+        select t_order.*,t_book.* from t_order,t_book where  t_order.book_id =t_book.book_id and  id=#{id}
+    </select>
+
+    <select id="queryAllOrder" resultMap="selectOrder">
+        select t_order.*,t_book.* from t_order,t_book where  t_order.book_id =t_book.book_id
+    </select>
+
+    <select id="queryOrderByName" resultMap="selectOrder">
+        select t_order.*,t_book.* from t_order,t_book where  t_order.book_id =t_book.book_id
+        and t_book.book_name like '%${bookName}%'
+    </select>
+
+    <!--    分页-->
+    <select id="queryOrderCount" resultType="Integer">
+        SELECT COUNT(*) FROM t_order
+    </select>
+
+    <select id="getOrderByLimit" resultMap="selectOrder" parameterType="com.ssm.until.Page">
+        select t_order.*,t_book.* from t_order,t_book where  t_order.book_id =t_book.book_id  limit #{start},#{count};
+    </select>
+
+
+</mapper>
